@@ -1,0 +1,228 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>使用PicGo+GitHub打造最稳定可靠的免费图床 | 卷毛</title>
+
+<link rel="shortcut icon" href="https://ziznah.github.io/favicon.ico?v=1664994452839">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ziznah.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            卷毛
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1664994452839"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    使用PicGo+GitHub打造最稳定可靠的免费图床
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-06-04 ·
+                    </time>
+                    
+                        <a href="https://ziznah.github.io/tag/C3mBXuY7J/" class="post-tags">
+                            # 图床
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="创建自己的github图床">创建自己的GitHub图床</h2>
+<h3 id="1创建github图床之前需要注册登陆github账号">1.创建GitHub图床之前，需要注册/登陆GitHub账号</h3>
+<p>申请<code>GitHub</code>账号并登陆到<code>GitHub</code>官网。</p>
+<h3 id="2创建repository">2.创建Repository</h3>
+<p>在个人选项栏中点击<code>New repository</code></p>
+<figure data-type="image" tabindex="1"><img src="https://cdn.jsdelivr.net/gh/zoengzihaam/ImgBed@master/images/20200509091239.jpg" alt="" loading="lazy"></figure>
+<p>添加<code>Repository</code>相关的一些设置<br>
+<img src="https://cdn.jsdelivr.net/gh/zoengzihaam/ImgBed@master/images/20200509091147.jpg" alt="" loading="lazy"></p>
+<h3 id="3生成一个token用于操作github-repository">3.生成一个Token用于操作GitHub Repository</h3>
+<p>在个人栏中选择<code>Settings</code><br>
+<img src="https://cdn.jsdelivr.net/gh/zoengzihaam/ImgBed@master/images/20200509091251.jpg" alt="" loading="lazy"></p>
+<p>点击左侧的<code>Developer settings</code></p>
+<figure data-type="image" tabindex="2"><img src="https://cdn.jsdelivr.net/gh/zoengzihaam/ImgBed@master/images/20200509091304.jpg" alt="" loading="lazy"></figure>
+<p>点击<code>Personal access tokens</code>为上面创建的<code>Repository</code>创建一个Token</p>
+<figure data-type="image" tabindex="3"><img src="https://cdn.jsdelivr.net/gh/zoengzihaam/ImgBed@master/images/20200509091314.jpg" alt="" loading="lazy"></figure>
+<p>创建一个新的<code>Token</code>，并配置信息。</p>
+<figure data-type="image" tabindex="4"><img src="https://cdn.jsdelivr.net/gh/zoengzihaam/ImgBed@master/images/20200509091324.jpg" alt="" loading="lazy"></figure>
+<p>创建成功复制生成的<code>Token</code>，<strong>这里注意</strong>：生成要提前复制保存，关闭了就看不到了，只能再次生成一次Token。</p>
+<h2 id="配置picgo">配置PicGo</h2>
+<h3 id="1下载运行picgo">1.下载运行PicGo</h3>
+<p>在官网下载<a href="https://molunerfinn.com/PicGo/">PicGo</a>，根据自己的操作系统进行下载。</p>
+<h3 id="2配置图床">2.配置图床</h3>
+<p>按照下图进行<code>GitHub</code>图床配置</p>
+<figure data-type="image" tabindex="5"><img src="https://cdn.jsdelivr.net/gh/zoengzihaam/ImgBed@master/images/20200509091333.jpg" alt="" loading="lazy"></figure>
+<h3 id="3快捷键及相关配置">3.快捷键及相关配置</h3>
+<h3 id="4其他相关">4.其他相关</h3>
+<h2 id="使用jsdelivr-cdn-加速-github-仓库的图片">使用jsDelivr CDN 加速 Github 仓库的图片</h2>
+<ul>
+<li>原自定义域名：</li>
+</ul>
+<p><code>https://raw.githubusercontent.com/用户名/仓库名/master/images</code></p>
+<ul>
+<li>加速后自定义域名</li>
+</ul>
+<p><code>https://cdn.jsdelivr.net/gh/用户名/仓库名@master</code></p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://ziznah.github.io/post/4/" class="post-title gt-a-link">
+                    Chrome浏览器查找当前的页面线程，并使用CE加载。
+                </a>
+            </div>
+        
+
+        
+
+        
+            
+
+            
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqusjs.css">
+<script src="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ziznah',
+  apikey: 'dWufGdjy1iAMfYrM0ffF2ft8b5LRsLVhB2leWpday9Cw8MIs3xPUKqv5Uj8csQWm',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+            
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">没有撤退可言。</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://ziznah.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

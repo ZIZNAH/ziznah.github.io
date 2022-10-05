@@ -1,0 +1,263 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>SpringCloud-OpenFeign远程调用 | 卷毛</title>
+
+<link rel="shortcut icon" href="https://ziznah.github.io/favicon.ico?v=1664994452839">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ziznah.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            卷毛
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1664994452839"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    SpringCloud-OpenFeign远程调用
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2021-09-12 ·
+                    </time>
+                    
+                        <a href="https://ziznah.github.io/tag/hR2Q3InCJ/" class="post-tags">
+                            # spring
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h1 id="springcloud-openfeign远程调用">SpringCloud-OpenFeign远程调用</h1>
+<h2 id="1-引入open-feign">1.  引入open-feign</h2>
+<p>引入依赖</p>
+<pre><code class="language-java">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h2 id="2-声明远程接口">2. 声明远程接口</h2>
+<p>编写一个接口，告诉 SpringCloud 这个接口需要调用远程服务</p>
+<p>（将需要调用的方法完整签名复制到这个接口中）</p>
+<p><strong>定义的接口：</strong></p>
+<pre><code class="language-java">//路径需要使用nacas注册中心中的名称
+@FeignClient(name = &quot;要调用微服务的applicationName&quot;)
+public interface xxxFeignService{
+    
+    
+    //    远程调用的路径需要完整
+    @RequestMapping(&quot;/aaa/bbb&quot;)
+    public R aaabbb();
+    
+}
+</code></pre>
+<p><strong>被调用的微服务的方法：</strong></p>
+<pre><code class="language-java">@RequestMapping(&quot;aaa&quot;)
+public class xxxController {
+
+    @RequestMapping(&quot;/bbb&quot;)
+    public R xxx(){
+
+        return &quot;&quot;;
+    }
+}
+</code></pre>
+<h2 id="3-开启远程调用功能">3. 开启远程调用功能</h2>
+<p><code>@EnableFeignClients(basePackages = &quot;xxx.feign&quot;)</code></p>
+<p>例子：</p>
+<pre><code class="language-java">@EnableFeignClients(basePackages = &quot;xxx.feign&quot;)	//这里写定义接口的包地址引用
+@SpringBootApplication
+@EnableDiscoveryClient
+public class xxxApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(xxxApplication.class, args);
+    }
+}
+</code></pre>
+<h2 id="问题">问题</h2>
+<p>由于Spring Cloud Feign在Hoxton.M2 RELEASED版本之后不再使用Ribbon而是使用spring-cloud-loadbalancer，所以不引入spring-cloud-loadbalancer会报错。</p>
+<p><strong>解决办法：</strong></p>
+<p>加入spring-cloud-loadbalancer依赖，并且在nacos中排除ribbon依赖。</p>
+<pre><code class="language-java">&lt;!--nacos服务注册--&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;/artifactId&gt;
+    &lt;!--排除ribbon--&gt;
+    &lt;exclusions&gt;
+        &lt;exclusion&gt;
+            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-starter-netflix-ribbon&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+    &lt;/exclusions&gt;
+&lt;/dependency&gt;
+
+&lt;!--引入spring-cloud-starter-loadbalancer--&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-loadbalancer&lt;/artifactId&gt;
+    &lt;version&gt;2.2.1.RELEASE&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://ziznah.github.io/post/kuai-su-da-jian-dou-ban-gua-xue-qi-dai-li/" class="post-title gt-a-link">
+                    快速搭建豆瓣刮削器代理
+                </a>
+            </div>
+        
+
+        
+
+        
+            
+
+            
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqusjs.css">
+<script src="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ziznah',
+  apikey: 'dWufGdjy1iAMfYrM0ffF2ft8b5LRsLVhB2leWpday9Cw8MIs3xPUKqv5Uj8csQWm',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+            
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">没有撤退可言。</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://ziznah.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

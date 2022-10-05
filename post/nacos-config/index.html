@@ -1,0 +1,241 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>使用nacos做配置中心 | 卷毛</title>
+
+<link rel="shortcut icon" href="https://ziznah.github.io/favicon.ico?v=1664994452839">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ziznah.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            卷毛
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1664994452839"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    使用nacos做配置中心
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2021-09-12 ·
+                    </time>
+                    
+                </div>
+                <div class="post-content">
+                    <h1 id="使用nacos做配置中心">使用nacos做配置中心</h1>
+<blockquote>
+<p>本示例针对指定的nacos版本以及springcloud版本 （小版本可对照尝试，大版本建议查看官方文档）</p>
+<p><code>spring-cloud-alibaba</code> ：2.1.0.RELEASE</p>
+<p><code>spring-cloud-starter-alibaba-nacos-config</code>：2.1.0.RELEASE</p>
+</blockquote>
+<h2 id="依赖">依赖</h2>
+<p>在pom.xml 文件，引入 Nacos Config Starter。</p>
+<pre><code class="language-java"> &lt;dependency&gt;
+     &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
+     &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;/artifactId&gt;
+ &lt;/dependency&gt;
+</code></pre>
+<h2 id="配置-nacos-config">配置 Nacos Config</h2>
+<ol>
+<li>
+<p>在<code>/src/main/resources/</code>下新建<code>bootstrap.properties</code>配置文件</p>
+</li>
+<li>
+<p>配置文件中进行如下配置</p>
+</li>
+</ol>
+<pre><code class="language-java">spring.application.name=微服务名
+spring.cloud.nacos.config.server-addr=nacos server地址:8848
+</code></pre>
+<h2 id="注解">注解</h2>
+<ol>
+<li>使用<code>@Value</code>来获取配置中的数据</li>
+<li>使用<code>@RefreshScope</code>打开动态刷新功能</li>
+</ol>
+<p>如下：</p>
+<pre><code class="language-java"> @RefreshScope
+ class SampleController {
+
+ 	@Value(&quot;${user.name}&quot;)
+ 	String userName;
+
+ 	@Value(&quot;${user.age}&quot;)
+ 	int age;
+ }
+</code></pre>
+<h2 id="使用">使用</h2>
+<p>在<code>Nacos Config</code>中动态使用修改配置：</p>
+<ol>
+<li>在配置中心默认添加一个 数据集（Data Id）<code>应用名.properties</code> ，<code>group</code> 默认为 <code>DEFAULT_GROUP</code>，可以通过 <code>spring.cloud.nacos.config.group</code> 配置。</li>
+<li>配置格式选择 <code>Properties</code>。</li>
+<li>配置内容中使用<code>Properties</code>格式进行配置更改或者添加。</li>
+</ol>
+<h2 id="注意事项">注意事项</h2>
+<ol>
+<li>如果Nacos Config和配置文件中有相同的配置信息，则Nacos Config中的数据有最高优先级。</li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://ziznah.github.io/post/openfeign/" class="post-title gt-a-link">
+                    SpringCloud-OpenFeign远程调用
+                </a>
+            </div>
+        
+
+        
+
+        
+            
+
+            
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqusjs.css">
+<script src="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ziznah',
+  apikey: 'dWufGdjy1iAMfYrM0ffF2ft8b5LRsLVhB2leWpday9Cw8MIs3xPUKqv5Uj8csQWm',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+            
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">没有撤退可言。</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://ziznah.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

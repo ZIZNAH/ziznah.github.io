@@ -1,0 +1,267 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>GateWay自定义全局GlobalFilter | 卷毛</title>
+
+<link rel="shortcut icon" href="https://ziznah.github.io/favicon.ico?v=1664994452839">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ziznah.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            卷毛
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1664994452839"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    GateWay自定义全局GlobalFilter
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-07-06 ·
+                    </time>
+                    
+                        <a href="https://ziznah.github.io/tag/hR2Q3InCJ/" class="post-tags">
+                            # spring
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h1 id="gateway自定义全局globalfilter">GateWay自定义全局GlobalFilter</h1>
+<h2 id="1实现两个接口">1.实现两个接口</h2>
+<ul>
+<li>
+<p>GlobalFilter</p>
+<p>用于自定义过滤器，例如进行Token验证</p>
+</li>
+<li>
+<p>Ordered</p>
+<p>Spring提供了Ordered这个接口，来处理相同接口实现类的优先级问题。</p>
+</li>
+</ul>
+<pre><code class="language-Java">import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.Ordered;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
+
+import java.util.Date;
+
+@Component
+@Slf4j
+public class MyLogGateWayFilter implements GlobalFilter, Ordered {
+
+    @Override
+    public Mono&lt;Void&gt; filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+
+        //打印输出信息
+        log.info(&quot;************come in MyLogGateWayFilter&quot; + new Date());
+
+        //获取request中的参数
+        String name = exchange.getRequest().getQueryParams().getFirst(&quot;name&quot;);
+        //判断参数的信息
+        if(name ==null){
+            log.info(&quot;************用户名为null，非法用户，/(ㄒoㄒ)/~~&quot;);
+            exchange.getResponse().setStatusCode(HttpStatus.NOT_ACCEPTABLE);
+            return exchange.getResponse().setComplete();
+        }
+
+        return chain.filter(exchange);
+    }
+
+    @Override
+    public int getOrder() {
+        return 0;
+    }
+}
+</code></pre>
+<h2 id="2-使用cmd验证">2. 使用CMD验证</h2>
+<ul>
+<li>
+<p>遵循过滤器中的规则</p>
+<figure data-type="image" tabindex="1"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200706185828.png" alt="image-20200706185828629" loading="lazy"></figure>
+</li>
+<li>
+<p>不遵循过滤器中的规则</p>
+<figure data-type="image" tabindex="2"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200706185856.png" alt="image-20200706185856027" loading="lazy"></figure>
+</li>
+</ul>
+<h2 id="3网页端测试">3.网页端测试</h2>
+<ul>
+<li>
+<p>遵循过滤器中的规则</p>
+<figure data-type="image" tabindex="3"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200706185952.png" alt="image-20200706185952065" loading="lazy"></figure>
+</li>
+<li>
+<p>不遵循过滤器中的规则</p>
+<figure data-type="image" tabindex="4"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200706190016.png" alt="image-20200706190016823" loading="lazy"></figure>
+</li>
+</ul>
+<p>结论：自定义Filter类似SpringMVC中的Filter，GlobalGilter 全局过滤器接口与 GatewayFilter 网关过滤器接口具有相同的方法定义。全局过滤器是一系列特殊的过滤器，会根据条件应用到所有路由中。网关过滤器是更细粒度的过滤器，作用于指定的路由中。</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://ziznah.github.io/post/12/" class="post-title gt-a-link">
+                    微服务中使用GateWay实现保护、增强和控制对于 API 服务的访问。
+                </a>
+            </div>
+        
+
+        
+
+        
+            
+
+            
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqusjs.css">
+<script src="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ziznah',
+  apikey: 'dWufGdjy1iAMfYrM0ffF2ft8b5LRsLVhB2leWpday9Cw8MIs3xPUKqv5Uj8csQWm',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+            
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">没有撤退可言。</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://ziznah.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

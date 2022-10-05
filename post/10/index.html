@@ -1,0 +1,262 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Docker中 CMD 与 ENTRYPOINT 保留指令的区别 | 卷毛</title>
+
+<link rel="shortcut icon" href="https://ziznah.github.io/favicon.ico?v=1664994452839">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ziznah.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            卷毛
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1664994452839"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    Docker中 CMD 与 ENTRYPOINT 保留指令的区别
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-06-09 ·
+                    </time>
+                    
+                        <a href="https://ziznah.github.io/tag/bV_DFMXGZ/" class="post-tags">
+                            # Docker
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <blockquote>
+<p>编写Dockerfile时，时常看到最后会看到CMD或者ENTRYPOINT 的保留指令，但是他们的意义都为：指定一个容器启动时要运行的命令，那么它们之间的差异在哪里？</p>
+</blockquote>
+<h2 id="使用curl命令来说明">使用curl命令来说明</h2>
+<h3 id="首先编写两个dockerfile">首先编写两个Dockerfile</h3>
+<ol>
+<li>使用<code>CMD</code>保留指令。</li>
+</ol>
+<pre><code class="language-shell">FROM centos
+RUN yum install -y curl
+CMD [ &quot;curl&quot;, &quot;-s&quot;, &quot;https://www.baidu.com/&quot; ]
+</code></pre>
+<p>这里 Dockerfile 的名字要求小写，否则会报错<code>invalid argument &quot;cmdCentos&quot; for &quot;-t, --tag&quot; flag: invalid reference format: repository name must be lowercase See 'docker build --help'.</code></p>
+<figure data-type="image" tabindex="1"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200609213217.png" alt="image-20200609213217668" loading="lazy"></figure>
+<ol start="2">
+<li>使用<code>ENTRYPOINT</code>保留指令。</li>
+</ol>
+<pre><code class="language-shell">FROM centos
+RUN yum install -y curl
+ENTRYPOINT [ &quot;curl&quot;, &quot;-s&quot;, &quot;https://www.baidu.com/&quot; ]
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200609213320.png" alt="image-20200609213320960" loading="lazy"></figure>
+<h3 id="在docker中进行build进行构建一个新的镜像">在docker中进行build进行构建一个新的镜像</h3>
+<ol>
+<li>
+<p>构建<code>CMD</code>保留指令的Dockerfile。</p>
+<figure data-type="image" tabindex="3"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200609213449.png" alt="image-20200609213449579" loading="lazy"></figure>
+</li>
+<li>
+<p>构建<code>ENTRYPOINT</code>保留指令的Dockerfile。</p>
+<figure data-type="image" tabindex="4"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200609213554.png" alt="image-20200609213553986" loading="lazy"></figure>
+</li>
+</ol>
+<h3 id="运行两个镜像进行对比">运行两个镜像进行对比</h3>
+<ol>
+<li>
+<p>运行<code>CMD</code>保留指令的镜像。</p>
+<figure data-type="image" tabindex="5"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200609213732.png" alt="image-20200609213732383" loading="lazy"></figure>
+</li>
+<li>
+<p>运行<code>ENTRYPOINT</code>保留指令的镜像。</p>
+<figure data-type="image" tabindex="6"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200609213855.png" alt="image-20200609213855288" loading="lazy"></figure>
+</li>
+</ol>
+<p>这个时候我们发现，两个镜像运行起来没有任何区别，但是<strong>重点来了</strong>！当我们需要<strong>对镜像启动时要运行的命令进行增强</strong>的时候。</p>
+<p>比如我们还想获取指定网站的<code>头信息</code>。</p>
+<ol start="3">
+<li>
+<p>运行增强后的<code>CMD</code>保留指令的镜像。</p>
+<figure data-type="image" tabindex="7"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200609214241.png" alt="image-20200609214241092" loading="lazy"></figure>
+</li>
+<li>
+<p>运行增强后的<code>ENTRYPOINT</code>保留指令的镜像。</p>
+<figure data-type="image" tabindex="8"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200609214443.png" alt="image-20200609214443164" loading="lazy"></figure>
+</li>
+</ol>
+<h3 id="总结">总结</h3>
+<p>由上述的案例，我们不难发现，在执行Dockerfile中，如果使用了<code>CMD</code>保留指令，那么在执行镜像的时候，我们在其启动命令后面添加<code>OPTION</code>选项的时候，将会覆盖Dockerfile中的上一句指令，造成运行失败。例如：</p>
+<pre><code class="language-shell">FROM centos
+RUN yum install -y curl
+CMD [ &quot;curl&quot;, &quot;-s&quot;, &quot;https://www.baidu.com/&quot; ]
+CMD -i
+</code></pre>
+<p>如果使用<code>ENTRYPOINT</code>保留指令，那么在执行镜像的时候，我们在其启动命令后面添加<code>OPTION</code>选项的时候，会对运行的命令进行<code>“增强”</code>。例如：</p>
+<pre><code class="language-shell">FROM centos
+RUN yum install -y curl
+ENTRYPOINT [ &quot;curl&quot;, &quot;-s&quot;,&quot;-i&quot;, &quot;https://www.baidu.com/&quot; ]
+</code></pre>
+<p>所以，在实际应用中，是使用<code>CMD</code>还是<code>ENTRYPOINT</code>保留指令，要根据具体的业务要求。</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://ziznah.github.io/post/9/" class="post-title gt-a-link">
+                    在VMware Workstation上安装CentOS7的网络问题
+                </a>
+            </div>
+        
+
+        
+
+        
+            
+
+            
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqusjs.css">
+<script src="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ziznah',
+  apikey: 'dWufGdjy1iAMfYrM0ffF2ft8b5LRsLVhB2leWpday9Cw8MIs3xPUKqv5Uj8csQWm',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+            
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">没有撤退可言。</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://ziznah.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

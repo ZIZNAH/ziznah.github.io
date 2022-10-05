@@ -1,0 +1,226 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Docker安装GUI图形化界面（Portainer） | 卷毛</title>
+
+<link rel="shortcut icon" href="https://ziznah.github.io/favicon.ico?v=1664994452839">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ziznah.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            卷毛
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1664994452839"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    Docker安装GUI图形化界面（Portainer）
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-07-25 ·
+                    </time>
+                    
+                        <a href="https://ziznah.github.io/tag/bV_DFMXGZ/" class="post-tags">
+                            # Docker
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h1 id="docker安装gui图形化界面portainer">Docker安装GUI图形化界面（Portainer）</h1>
+<blockquote>
+<p>Portainer是一个开源、轻量级Docker管理用户界面，基于Docker API，提供状态显示面板、应用模板快速部署、容器镜像网络数据卷的基本操作（包括上传下载镜像，创建容器等操作）、事件日志显示、容器控制台操作、Swarm集群和服务等集中管理和操作、登录用户管理和控制等功能。功能十分全面，基本能满足中小型单位对容器管理的全部需求。</p>
+</blockquote>
+<h2 id="快速入门">快速入门</h2>
+<h3 id="1官网">1.官网</h3>
+<p>https://www.portainer.io/installation/</p>
+<h3 id="2使用docker安装portainer">2.使用docker安装portainer</h3>
+<h4 id="1搜索portainer">1.搜索portainer</h4>
+<pre><code class="language-visual">docker search portainer
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200725205726.png" alt="image-20200725205725916" loading="lazy"></figure>
+<h4 id="2将镜像拉取到本地">2.将镜像拉取到本地</h4>
+<pre><code class="language-visual">docker pull portainer/portainer
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200725205825.png" alt="image-20200725205824991" loading="lazy"></figure>
+<h4 id="3运行镜像">3.运行镜像</h4>
+<pre><code class="language-vi">docker run -d -it --name portainerUI -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200725205900.png" alt="image-20200725205900786" loading="lazy"></figure>
+<p>注意：这里如果使用单机版，一定要使用 <code>-v /var/run/docker.sock:/var/run/docker.sock</code>，否则在进入WEBUI的时候创建会出现问题，这里 <code>volume</code>也可使用官方教程，这里将运行代码一并贴入。</p>
+<pre><code class="language-visual">docker volume create portainer_data
+docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+</code></pre>
+<p>官方这里创建了一个portainer_data的文件夹用于存储数据，大家按需运行即可。</p>
+<h3 id="3访问portainer">3.访问Portainer</h3>
+<h4 id="1创建用户">1.创建用户</h4>
+<p>打开浏览器输入 <code>ip:端口号</code>，这里ip是Linux的地址，端口号为启动的时候映射的端口。</p>
+<figure data-type="image" tabindex="4"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200725211127.png" alt="image-20200725211127863" loading="lazy"></figure>
+<h4 id="2连接docker环境">2.连接docker环境</h4>
+<figure data-type="image" tabindex="5"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200725211700.png" alt="image-20200725211700177" loading="lazy"></figure>
+<h4 id="3进入portainer管理">3.进入Portainer管理</h4>
+<figure data-type="image" tabindex="6"><img src="https://gitee.com/zoengzihaam/ImgBed/raw/master/images/20200725211815.png" alt="image-20200725211815704" loading="lazy"></figure>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://ziznah.github.io/post/13/" class="post-title gt-a-link">
+                    GateWay自定义全局GlobalFilter
+                </a>
+            </div>
+        
+
+        
+
+        
+            
+
+            
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqusjs.css">
+<script src="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ziznah',
+  apikey: 'dWufGdjy1iAMfYrM0ffF2ft8b5LRsLVhB2leWpday9Cw8MIs3xPUKqv5Uj8csQWm',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+            
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">没有撤退可言。</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://ziznah.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>在虚拟机 VMware 下安装 Linux | 卷毛</title>
+
+<link rel="shortcut icon" href="https://ziznah.github.io/favicon.ico?v=1664994452839">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ziznah.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            卷毛
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1664994452839"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    在虚拟机 VMware 下安装 Linux
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-05-20 ·
+                    </time>
+                    
+                        <a href="https://ziznah.github.io/tag/BMhg_qYrO/" class="post-tags">
+                            # Linux
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <blockquote>
+<p>Java后续学习中使用Linux系统，首先要将Linux的安装精通。</p>
+</blockquote>
+<h2 id="安装linux的工具以及linux版本">安装Linux的工具，以及Linux版本</h2>
+<ul>
+<li>VMware Woekstation (WORKSTATION 12 PRO)</li>
+<li>Linux：Centos</li>
+<li>Centos：CentOS-6.7-i386-bin-DVD1.iso</li>
+</ul>
+<p>注意：这里<code>Centos</code>使用的是 <code>32位</code>，大家可以按需选择 Centos 的版本。</p>
+<h2 id="在vmware创建虚拟机">在VMware创建虚拟机</h2>
+<h3 id="1创建一个新的虚拟机">1.创建一个新的虚拟机</h3>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509101646.png" alt="image-20200509101644428" loading="lazy"></figure>
+<h3 id="2centos镜像选择">2.Centos镜像选择</h3>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509101934.png" alt="image-20200509101932836" loading="lazy"></figure>
+<h3 id="3centos操作系统安装版本">3.Centos操作系统安装版本</h3>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509102037.png" alt="image-20200509102035277" loading="lazy"></figure>
+<h3 id="4选择linux命名以及安装位置">4.选择Linux命名以及安装位置</h3>
+<ul>
+<li>这里安装位置是否加虚拟机名称可有可无</li>
+</ul>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509102303.png" alt="image-20200509102302046" loading="lazy"></figure>
+<h3 id="5设置虚拟机的linux大小">5.设置虚拟机的Linux大小</h3>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509102513.png" alt="image-20200509102512744" loading="lazy"></figure>
+<h3 id="6自定义硬件">6.自定义硬件</h3>
+<ul>
+<li>内容、处理器可以自己设置，这里ISO映像选择CentOS-6.7-i386-bin-DVD1.iso</li>
+</ul>
+<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509102638.png" alt="image-20200509102636940" loading="lazy"></figure>
+<p><strong>到此，Linux在虚拟机上的配置全部完成，下面开始Linux系统的安装。</strong></p>
+<h2 id="安装linux">安装Linux</h2>
+<h3 id="1在vmware上开启虚拟机">1.在VMware上开启虚拟机</h3>
+<figure data-type="image" tabindex="7"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509102939.png" alt="image-20200509102938309" loading="lazy"></figure>
+<h3 id="2安装选项">2.安装选项</h3>
+<ul>
+<li>默认选择第一项即可</li>
+</ul>
+<figure data-type="image" tabindex="8"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509103105.png" alt="image-20200509103103597" loading="lazy"></figure>
+<ul>
+<li>
+<p>跳过检测</p>
+<p>这里会出现磁盘检测，这里使用<code>Tab</code>切换到<code>Skip</code>，敲<code>Enter</code>跳过即可，这里也可以选择<code>OK</code>，不过检测会耗费大量时间。</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="9"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509103251.png" alt="image-20200509103250434" loading="lazy"></figure>
+<h3 id="3进入安装gui界面">3.进入安装GUI界面</h3>
+<figure data-type="image" tabindex="10"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509103538.png" alt="image-20200509103537276" loading="lazy"></figure>
+<ul>
+<li>
+<p><strong>选择语言</strong></p>
+<p>这里推荐默认 English，可以自行选择</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="11"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509103643.png" alt="image-20200509103640636" loading="lazy"></figure>
+<ul>
+<li><strong>选择键盘布局</strong></li>
+</ul>
+<figure data-type="image" tabindex="12"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509103730.png" alt="image-20200509103729632" loading="lazy"></figure>
+<ul>
+<li>
+<p><strong>选择存储格式</strong></p>
+<p>这里选择<code>Basic Storage Devices</code>即可</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="13"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509103859.png" alt="image-20200509103857954" loading="lazy"></figure>
+<ul>
+<li><strong>格式化磁盘</strong></li>
+</ul>
+<figure data-type="image" tabindex="14"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509104007.png" alt="image-20200509104006300" loading="lazy"></figure>
+<ul>
+<li><strong>设置主机名</strong></li>
+</ul>
+<figure data-type="image" tabindex="15"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509104107.png" alt="image-20200509104101557" loading="lazy"></figure>
+<ul>
+<li><strong>选择时区</strong></li>
+</ul>
+<figure data-type="image" tabindex="16"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509104318.png" alt="image-20200509104316772" loading="lazy"></figure>
+<ul>
+<li>
+<p><strong>设置<code>ROOT</code>密码</strong></p>
+<p>这里密码简单会跳出提示，这里选择<code>Use Anyway</code>即可</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="17"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509104458.png" alt="image-20200509104457001" loading="lazy"></figure>
+<ul>
+<li>
+<p><strong>初始化设置</strong></p>
+<p>选择<code>Use All Space</code></p>
+</li>
+</ul>
+<figure data-type="image" tabindex="18"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509104641.png" alt="image-20200509104639482" loading="lazy"></figure>
+<p>​		选择<code>Write changes to disk</code></p>
+<figure data-type="image" tabindex="19"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509104745.png" alt="image-20200509104744531" loading="lazy"></figure>
+<ul>
+<li>
+<p><strong>选择Centos的版本，这里选择<code>Desktop</code></strong></p>
+<p>选择Desktop会默认安装一些软件，选择其他样式可能会缺少一些软件，后期也可以自己安装。</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="20"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509104957.png" alt="image-20200509104955427" loading="lazy"></figure>
+<ul>
+<li><strong>等待安装</strong></li>
+</ul>
+<figure data-type="image" tabindex="21"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509105228.png" alt="image-20200509105227066" loading="lazy"></figure>
+<ul>
+<li>
+<p><strong>重新引导</strong></p>
+<p>安装成功之后，我们需要重新引导一下，稍等片刻即可进入Centos，Please enjoy~</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="22"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509110512.png" alt="image-20200509110511330" loading="lazy"></figure>
+<h2 id="后续">后续</h2>
+<ul>
+<li><strong>欢迎界面</strong></li>
+</ul>
+<figure data-type="image" tabindex="23"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509110649.png" alt="image-20200509110648206" loading="lazy"></figure>
+<ul>
+<li><strong>同意许可</strong></li>
+</ul>
+<figure data-type="image" tabindex="24"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509110722.png" alt="image-20200509110720300" loading="lazy"></figure>
+<ul>
+<li><strong>设置用户</strong></li>
+</ul>
+<figure data-type="image" tabindex="25"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509110746.png" alt="image-20200509110744391" loading="lazy"></figure>
+<ul>
+<li><strong>设置时间</strong></li>
+</ul>
+<figure data-type="image" tabindex="26"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509110815.png" alt="image-20200509110814228" loading="lazy"></figure>
+<ul>
+<li><strong>设置<code>Kdump</code>，默认即可。</strong></li>
+</ul>
+<figure data-type="image" tabindex="27"><img src="https://raw.githubusercontent.com/zoengzihaam/ImgBed/master/images/20200509110845.png" alt="image-20200509110844747" loading="lazy"></figure>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://ziznah.github.io/post/1/" class="post-title gt-a-link">
+                    Linux下安装Java配置环境
+                </a>
+            </div>
+        
+
+        
+
+        
+            
+
+            
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqusjs.css">
+<script src="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ziznah',
+  apikey: 'dWufGdjy1iAMfYrM0ffF2ft8b5LRsLVhB2leWpday9Cw8MIs3xPUKqv5Uj8csQWm',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+            
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">没有撤退可言。</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://ziznah.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

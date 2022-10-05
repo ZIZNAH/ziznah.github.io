@@ -1,0 +1,274 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>快速搭建豆瓣刮削器代理 | 卷毛</title>
+
+<link rel="shortcut icon" href="https://ziznah.github.io/favicon.ico?v=1664994452839">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ziznah.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            卷毛
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1664994452839"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    快速搭建豆瓣刮削器代理
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2021-06-28 ·
+                    </time>
+                    
+                </div>
+                <div class="post-content">
+                    <blockquote>
+<p>由于公用的搜刮器用的是同一个代理，随着大量的用户访问，导致代理挂了，搭建自己的代理实现搜刮自由。</p>
+</blockquote>
+<h2 id="在cloudflare建立workers应用">在cloudflare建立<code>workers</code>应用</h2>
+<ol>
+<li>
+<p>打开 https://dash.cloudflare.com/sign-up，注册自己的账号。</p>
+</li>
+<li>
+<p>在个人主页中，右侧点击建立“workers”应用。</p>
+</li>
+<li>
+<p>点击“创建worker”。</p>
+</li>
+<li>
+<p>删除内置代码，复制下面的内容。</p>
+</li>
+</ol>
+<pre><code class="language-shell">addEventListener('fetch', event =&gt; {
+event.respondWith(handleRequest(event.request))
+})
+
+async function handleRequest(request) {
+targetUrl = request.url.split('-----')[1]
+return await fetch(targetUrl)
+}
+</code></pre>
+<ol start="5">
+<li>点击“保存并部署”。</li>
+</ol>
+<p><strong>PS</strong>:可以workers可以自定义名称，后面要使用。</p>
+<h2 id="群晖ssh安装">群晖SSH安装</h2>
+<pre><code class="language-shell">安装：
+
+1. ssh 登录群晖系统
+2. 执行wget https://raw.githubusercontent.com/jswh/synology_video_station_douban_plugin/master/install.sh
+3. 执行sudo bash install.sh uninstall （第一次安装可以跳过这个步骤）
+4. 执行sudo bash install.sh install 'http://douban.abc.workers.dev'
+http://douban.abc.workers.dev 为上方workers部署到的域名地址
+
+卸载
+
+1. ssh 登录群晖系统
+2. 执行wget https://raw.githubusercontent.com/jswh/synology_video_station_douban_plugin/master/install.sh
+3. 执行sudo bash install.sh uninstall
+</code></pre>
+<p>更改演员表中英文为中文</p>
+<ol>
+<li>
+<p>找到douban.php文件</p>
+<pre><code class="language-shell">douban.php在以下文件夹中
+/var/packages/VideoStation/target/plugins/syno_file_assets
+</code></pre>
+</li>
+<li>
+<p>添加替换代码</p>
+<pre><code class="language-shell">foreach ($movie_data-&gt;{$fn}() as $item) {
+        if (!in_array($item['name'], $data[$key])) {
+        	#在此位置添加以下代码
+        	$item['name']= explode(&quot; &quot;, $item['name']);
+             array_push($data[$key], format_the_name($item['name']));
+        }
+        }
+</code></pre>
+</li>
+</ol>
+<h2 id="群晖访问github">群晖访问GitHub</h2>
+<blockquote>
+<p>上方下载脚本的时候，如果访问不了GitHub，解决方式是以 root 权限修改群晖的 hosts 文件，重新指向刮削器可以正常访问的 IP 地址即可。</p>
+</blockquote>
+<ol>
+<li>
+<p>首先先用 SSH 工具以 root 权限登录群晖。然后输入<code>vim /etc/hosts</code>打开 hosts 文件</p>
+</li>
+<li>
+<p>英文输入法下在键盘上按下<code>i</code>键进入编辑模式，然后添加以下内容</p>
+<pre><code class="language-shell">140.82.114.3 github.com
+185.199.108.153 assets-cdn.github.com
+199.232.69.194 github.global.ssl.fastly.net
+</code></pre>
+</li>
+<li>
+<p>然后按键盘上的<code>ESC</code>键退出编辑，再输入<code>:wq</code> 保存并退出编辑器。</p>
+</li>
+</ol>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://ziznah.github.io/post/shi-pin-ying-jie-tu-shi/" class="post-title gt-a-link">
+                    视频硬解图示
+                </a>
+            </div>
+        
+
+        
+
+        
+            
+
+            
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqusjs.css">
+<script src="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ziznah',
+  apikey: 'dWufGdjy1iAMfYrM0ffF2ft8b5LRsLVhB2leWpday9Cw8MIs3xPUKqv5Uj8csQWm',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+            
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">没有撤退可言。</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://ziznah.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

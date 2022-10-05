@@ -1,0 +1,370 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>NetflixDNS解锁 | 卷毛</title>
+
+<link rel="shortcut icon" href="https://ziznah.github.io/favicon.ico?v=1664994452839">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ziznah.github.io/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            卷毛
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1664994452839"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    NetflixDNS解锁
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2021-01-12 ·
+                    </time>
+                    
+                        <a href="https://ziznah.github.io/tag/g80SHtBSX/" class="post-tags">
+                            # Netflix
+                        </a>
+                    
+                        <a href="https://ziznah.github.io/tag/nT7uo7T7GH/" class="post-tags">
+                            # VPS
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <h1 id="netflixdns解锁">NetflixDNS解锁</h1>
+<blockquote>
+<p>由于Netflix的版权问题，使用一般的代理服务跨区看剧时会被 Netflix 检测到并阻止，当我们使用的vps不能观看Netflix的时候，我们可以选择购买便宜大碗的vps来辅助解锁不能查看Netflix的vps。</p>
+</blockquote>
+<h2 id="准备工作">准备工作</h2>
+<p>正式开始之前，我们需要做一些基本的准备，你至少需要这些东西：</p>
+<ul>
+<li>支持 Netflix 的代理服务</li>
+<li>不支持 Netflix 的代理服务</li>
+<li>Netflix订阅</li>
+</ul>
+<p><strong>就目前而言，美区应该是目前剧集资源最丰富的地区，但是根据本人亲测，美区的资源并不符合国人的观看风格，个人比较推荐香港。</strong></p>
+<h2 id="使用dnsmasq解锁netflix奈飞流媒体服务">使用Dnsmasq解锁Netflix（奈飞）流媒体服务</h2>
+<p>这里借助了<a href="https://www.moeelf.com/archives/23.html">萌精灵</a> 的脚本实现，这里感谢萌精灵。</p>
+<p><strong>安装方法：</strong></p>
+<p>支持 Netflix 的代理vps安装</p>
+<pre><code class="language-shell">wget --no-check-certificate -O dnsmasq_sniproxy.sh https://raw.githubusercontent.com/myxuchangbin/dnsmasq_sniproxy_install/master/dnsmasq_sniproxy.sh &amp;&amp; bash dnsmasq_sniproxy.sh -f
+</code></pre>
+<p><strong>卸载方法：</strong></p>
+<pre><code class="language-shell">wget --no-check-certificate -O dnsmasq_sniproxy.sh https://raw.githubusercontent.com/myxuchangbin/dnsmasq_sniproxy_install/master/dnsmasq_sniproxy.sh &amp;&amp; bash dnsmasq_sniproxy.sh -u
+</code></pre>
+<p><strong>使用方法：</strong></p>
+<p>将<code>不支持 Netflix 的代理VPS</code>的DNS地址修改为<code>支持 Netflix 的代理vps</code>的IP就可以了，如果不能用，记得只保留一个DNS地址试一下。</p>
+<p>⚠️：防止滥用，建议不要随意公布IP地址，或使用防火墙做好限制工作。</p>
+<p><strong>调试排错：</strong></p>
+<ul>
+<li>确认sniproxy有效运行</li>
+</ul>
+<p>重启sni命令：systemctl restart sniproxy</p>
+<p>如果sni不在运行，可检查配置/etc/sniproxy.conf，避免ss、nginx或者其他程序监听80,443，可将其配置文件的80更改为801等。 443端口必须给sni监听放行，查看：netstat -tlunp|grep 443</p>
+<ul>
+<li>确认防火墙放行443,53</li>
+</ul>
+<p>调试可直接关闭防火墙 systemctl stop firewalld.service</p>
+<p>阿里云/谷歌云/AWS等外部防火墙放行 可通过其他服务器 telnet vpsip 53 以及 telnet vpsip 443 进行测试</p>
+<ul>
+<li>解析域名</li>
+</ul>
+<p>尝试用其他服务器配置完毕dns后，解析域名：nslookup <a href="https://www.moeelf.com/tag/netflix">netflix</a>.com 判断IP是否是NETFLIX代理机器IP 如果不存在nslookup命令，CENTOS安装：yum install -y bind-utils，DEBIAN安装：apt-get -y install dnsutils</p>
+<h2 id="一键脚本修改推荐修改方式">一键脚本修改推荐修改方式：</h2>
+<blockquote>
+<p>一键脚本很多都会自带dns服务，会影响流媒体的dns解锁。</p>
+</blockquote>
+<p><strong>修改方式：</strong></p>
+<pre><code class="language-shell">vi /etc/v2ray/config.json
+</code></pre>
+<p>找到DNS</p>
+<pre><code class="language-shell">&quot;dns&quot;: {
+        &quot;servers&quot;: [
+            {
+                &quot;address&quot;: &quot;xxx.xxx.xxx.xxx&quot;,     //此处为支持 Netflix 的代理VPS
+                &quot;port&quot;: 53,
+                &quot;domains&quot;: [
+                    &quot;domain:netflix.com&quot;,
+                    &quot;domain:netflix.net&quot;,
+                    &quot;domain:nflximg.net&quot;,
+                    &quot;domain:nflxvideo.net&quot;,
+                    &quot;domain:nflxso.net&quot;,
+                    &quot;domain:nflxext.com&quot;
+                ]
+            },
+            &quot;localhost&quot;
+        ]
+    }
+</code></pre>
+<p>修改配置完成以后，请重启你的V2RAY服务，或是重启VPS。</p>
+<h2 id="使用分流让不同的流媒体走不同的dns">使用分流，让不同的流媒体走不同的DNS</h2>
+<p><strong>修改方法：</strong></p>
+<pre><code class="language-shell">&quot;dns&quot;: {
+        &quot;servers&quot;: [
+            {
+                &quot;address&quot;: &quot;支持Netflix的代理VPS&quot;,
+                &quot;port&quot;: 53,
+                &quot;domains&quot;: [
+                    &quot;domain:netflix.com&quot;,
+                    &quot;domain:netflix.net&quot;,
+                    &quot;domain:nflximg.net&quot;,
+                    &quot;domain:nflxvideo.net&quot;,
+                    &quot;domain:nflxso.net&quot;,
+                    &quot;domain:nflxext.com&quot;
+                ]
+            },
+            {
+                &quot;address&quot;: &quot;支持的代理VPS&quot;,
+                &quot;port&quot;: 53,
+                &quot;domains&quot;: [
+                    &quot;domain:gamer2-cds.cdn.hinet.net&quot;,
+                    &quot;domain:gamer-cds.cdn.hinet.net&quot;,
+                    &quot;domain:gamer.com.tw&quot;,
+                    &quot;domain:i2.bahamut.com.tw&quot;,
+                    &quot;domain:app-measurement.com&quot;
+                ]
+            },
+            {
+                &quot;address&quot;: &quot;支持的代理VPS&quot;,
+                &quot;port&quot;: 53,
+                &quot;domains&quot;: [
+                    &quot;domain:bilibili.com&quot;
+                ]
+            },
+            &quot;localhost&quot;
+        ]
+    }
+</code></pre>
+<h2 id="域名规则">域名规则</h2>
+<h3 id="netflix"><strong>Netflix</strong></h3>
+<pre><code class="language-shell">netflix.com
+netflix.net
+nflximg.net
+nflximg.com
+nflxvideo.net
+nflxso.net
+nflxext.com
+</code></pre>
+<h3 id="spotify"><strong>Spotify</strong></h3>
+<pre><code class="language-shell">scdn.co
+spotify.com
+spoti.fi
+</code></pre>
+<h3 id="bilibili"><strong>bilibili</strong></h3>
+<pre><code class="language-shell">bilibili.com
+</code></pre>
+<h3 id="动画疯"><strong>动画疯</strong></h3>
+<pre><code class="language-shell">gamer-cds.cdn.hinet.net
+gamer2-cds.cdn.hinet.net
+gamer.com.tw
+i2.bahamut.com.tw
+app-measurement.com
+</code></pre>
+<h3 id="line"><strong>Line</strong></h3>
+<pre><code class="language-shell">lin.ee
+line.me
+linenaver.jp
+line-apps.com
+line-cdn.net
+line-scdn.net
+linetv.tw
+cloudfront.net
+</code></pre>
+<h3 id="fox"><strong>Fox+</strong></h3>
+<pre><code class="language-shell">fox.com
+foxdng.com
+foxnow.com
+foxplus.com
+foxplay.com
+</code></pre>
+<h3 id="bbc"><strong>BBC</strong></h3>
+<pre><code class="language-shell">bbc.co
+bbc.com
+co.uk
+llnwd.net
+akamaized.net
+</code></pre>
+<h3 id="hulu"><strong>Hulu</strong></h3>
+<pre><code class="language-shell">hulu.com
+huluim.com
+</code></pre>
+<h3 id="hbo美区"><strong>hbo(美区)</strong></h3>
+<pre><code class="language-shell">hbonow.com
+hbogo.com
+hbomax.com
+hbo.com
+</code></pre>
+<h3 id="disney"><strong>disney</strong></h3>
+<pre><code class="language-shell">disney.com
+disneyjunior.com
+disneyplus.com
+disney-plus.net
+dssott.com
+bamgrid.com
+amazonaws.com
+go.com
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://ziznah.github.io/post/19/" class="post-title gt-a-link">
+                    ROS双软路由使用jump实现公网端口转发
+                </a>
+            </div>
+        
+
+        
+
+        
+            
+
+            
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqusjs.css">
+<script src="https://cdn.jsdelivr.net/npm/disqusjs/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ziznah',
+  apikey: 'dWufGdjy1iAMfYrM0ffF2ft8b5LRsLVhB2leWpday9Cw8MIs3xPUKqv5Uj8csQWm',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+            
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">没有撤退可言。</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://ziznah.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>
